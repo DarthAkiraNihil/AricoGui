@@ -7,6 +7,7 @@
 
 #include <QObject>
 #include "type/AricoMode.h"
+#include "arico/Arico.h"
 
 namespace ViewModel {
     
@@ -14,6 +15,11 @@ namespace ViewModel {
         Q_OBJECT
         
         private:
+            
+            QWidget* parent;
+        
+            Arico::Arico* aricoInstance;
+            
             QString inputFileName;
             QString outputFileName;
             int width;
@@ -22,17 +28,19 @@ namespace ViewModel {
             Type::AricoMode mode;
         
         public:
-            explicit MainWindowModel();
+            explicit MainWindowModel(Arico::Arico* arico, QWidget* parent);
             
         signals:
             void selectedInputFileChanged(QString filename);
+            void nonRequiredParametersEnabledChanged(bool state);
             
         public slots:
             void selectPackMode(bool checked = false);
             void selectUnpackMode(bool checked = false);
             
-            void selectInputFileButtonPressed(bool checked = false);
+            void selectInputFile(bool checked = false);
             
+            void executeArico(bool checked = false);
     };
     
 } // ViewModel

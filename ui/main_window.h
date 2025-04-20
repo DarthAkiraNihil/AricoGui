@@ -24,7 +24,8 @@ namespace UI {
             ~MainWindow() override;
             
         private slots:
-            void changeSelectedInputFile(QString filename);
+            void changeSelectedInputFile(const QString& filename);
+            void changeNonRequiredParametersEnableState(bool state);
         
         private:
             Ui::MainWindow *ui;

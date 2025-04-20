@@ -245,7 +245,15 @@
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="layoutRun"/>
+          <layout class="QHBoxLayout" name="layoutRun">
+           <item>
+            <widget class="QPushButton" name="buttonExecute">
+             <property name="text">
+              <string>exec</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>

@@ -16,7 +16,11 @@ namespace UI {
         QMainWindow(parent), ui(new Ui::MainWindow) {
         this->ui->setupUi(this);
         
-        this->viewModel = new ViewModel::MainWindowModel;
+        Arico::Arico* arico = new Arico::Arico;
+        
+        this->viewModel = new ViewModel::MainWindowModel(arico, this);
+        
+        
         
         this->connectSignals();
         
@@ -41,14 +45,23 @@ namespace UI {
     }
     
     void MainWindow::connectSignals() {
-        QObject::connect(this->ui->radioButtonCompress, &QAbstractButton::clicked, this->viewModel,
-                         &ViewModel::MainWindowModel::selectPackMode);
-        QObject::connect(this->ui->radioButtonDecompress, &QAbstractButton::clicked, this->viewModel,
-                         &ViewModel::MainWindowModel::selectUnpackMode);
+        QObject::connect(this->ui->radioButtonCompress, &QAbstractButton::clicked, this->viewModel, &ViewModel::MainWindowModel::selectPackMode);
+        QObject::connect(this->ui->radioButtonDecompress, &QAbstractButton::clicked, this->viewModel, &ViewModel::MainWindowModel::selectUnpackMode);
+        
+        QObject::connect(this->ui->buttonSelectFile, &QAbstractButton::clicked, this->viewModel,&ViewModel::MainWindowModel::selectInputFile);
+        QObject::connect(this->ui->buttonExecute, &QAbstractButton::clicked, this->viewModel, &ViewModel::MainWindowModel::executeArico);
+        
+        QObject::connect(this->viewModel, &ViewModel::MainWindowModel::nonRequiredParametersEnabledChanged, this, &MainWindow::changeNonRequiredParametersEnableState);
+        QObject::connect(this->viewModel, &ViewModel::MainWindowModel::selectedInputFileChanged, this, &MainWindow::changeSelectedInputFile);
     }
     
-    void MainWindow::changeSelectedInputFile(QString filename) {
+    void MainWindow::changeSelectedInputFile(const QString& filename) {
+        this->ui->labelInputFile->setText(filename);
+    }
     
+    void MainWindow::changeNonRequiredParametersEnableState(bool state) {
+        this->ui->lineEditScale->setEnabled(state);
+        this->ui->lineEditWidth->setEnabled(state);
     }
     
 } // UI
