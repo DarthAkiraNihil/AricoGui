@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>UI::MainWindow</class>
+ <widget class="QMainWindow" name="UI::MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>720</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1280</width>
+    <height>720</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Arico GUI</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+	border-image: url(:/assets/app_bg.jpg) 3 10 3 10;
+	border-color: rgba(0,0,0,100);
+	border-top: 3px transparent;
+    border-bottom: 3px transparent;
+    border-right: 10px transparent;
+    border-left: 10px transparent;
+}</string>
+  </property>
+  <widget class="QWidget" name="mainWidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1">
+      <property name="leftMargin">
+       <number>16</number>
+      </property>
+      <property name="topMargin">
+       <number>16</number>
+      </property>
+      <property name="rightMargin">
+       <number>16</number>
+      </property>
+      <property name="bottomMargin">
+       <number>16</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="widgetOptions" native="true">
+        <property name="styleSheet">
+         <string notr="true">QWidget#widgetOptions {
+	background-color: rgba(0, 0, 0, 72);
+}</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,1,1,1">
+         <property name="sizeConstraint">
+          <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
+         </property>
+         <item>
+          <widget class="QLabel" name="labelLogo">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>64</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>64</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>JetBrains Mono</family>
+             <pointsize>32</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>LOGO</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBoxMode">
+           <property name="font">
+            <font>
+             <family>JetBrains Mono</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="title">
+            <string>Выберите режим работы:</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QRadioButton" name="radioButtonCompress">
+              <property name="font">
+               <font>
+                <family>JetBrains Mono</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(255, 255, 255);</string>
+              </property>
+              <property name="text">
+               <string>Сжатие</string>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>64</width>
+                <height>64</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButtonDecompress">
+              <property name="font">
+               <font>
+                <family>JetBrains Mono</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(255, 255, 255);</string>
+              </property>
+              <property name="text">
+               <string>Распаковка</string>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>64</width>
+                <height>64</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBoxFiles">
+           <property name="title">
+            <string>Параметры ввода и вывода</string>
+           </property>
+           <layout class="QVBoxLayout" name="layoutFiles" stretch="1,1">
+            <item>
+             <layout class="QHBoxLayout" name="layoutInputFile" stretch="1,1,3">
+              <item>
+               <widget class="QLabel" name="labelSelectInputFile">
+                <property name="text">
+                 <string>Выберите входной файл:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="buttonSelectFile">
+                <property name="text">
+                 <string>Выберите файл</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelInputFile">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="layoutOutputFile">
+              <item>
+               <widget class="QLabel" name="labelEnterOutputFilename">
+                <property name="text">
+                 <string>Введите имя выходного файла:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEditOutputFilename">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="placeholderText">
+                 <string>если пустое, то к имени входного файла будет добавлено .ari</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBoxNonRequiredOptions">
+           <property name="title">
+            <string>Необязательные параметры</string>
+           </property>
+           <layout class="QHBoxLayout" name="layoutNonRequiredOptions" stretch="1,1,1,1">
+            <item>
+             <widget class="QLabel" name="labelWidth">
+              <property name="text">
+               <string>Ширина слова:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEditWidth">
+              <property name="placeholderText">
+               <string>32</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="labelScale">
+              <property name="text">
+               <string>Масштаб:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEditScale">
+              <property name="placeholderText">
+               <string>0</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="layoutRun"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget_2" native="true"/>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1280</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/app_bg.jpg</file>
+        <file>assets/icon_compress.png</file>
+        <file>assets/icon_decompress.png</file>
+        <file>assets/JetBrainsMono-Regular.ttf</file>
+    </qresource>
+</RCC>
