@@ -27,6 +27,8 @@ add_executable(AricoGui main.cpp
         arico/Arico.cpp
         arico/Arico.h
         arico/AricoParameters.h
+        arico/AricoResult.h
+        arico/AricoExecutionStatus.h
 )
 target_link_libraries(AricoGui
         Qt::Core

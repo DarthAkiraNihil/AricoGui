@@ -27,6 +27,41 @@
     border-bottom: 3px transparent;
     border-right: 10px transparent;
     border-left: 10px transparent;
+}
+
+QPushButton {
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(0, 192, 192, 255));
+	border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: rgb(0, 0, 118);
+	color: black;
+	padding: 8px;
+}
+
+QPushButton:pressed {
+	background-color: rgb(0, 255, 0);
+	border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: rgb(0, 0, 118);
+	color: black;
+	padding: 8px;
+}
+
+QPushButton:hover {
+	background-color: rgb(197, 255, 209);
+	border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: rgb(0, 0, 118);
+	color: black;
+	padding: 8px;
+}
+
+QLIneEdit {
+   	border: 2px solid;
+	font: 12pt;
 }</string>
   </property>
   <widget class="QWidget" name="mainWidget">
@@ -61,16 +96,22 @@
          </property>
          <item>
           <widget class="QLabel" name="labelLogo">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
-             <width>0</width>
-             <height>64</height>
+             <width>216</width>
+             <height>72</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>16777215</width>
-             <height>64</height>
+             <width>216</width>
+             <height>72</height>
             </size>
            </property>
            <property name="font">
@@ -79,11 +120,14 @@
              <pointsize>32</pointsize>
             </font>
            </property>
+           <property name="layoutDirection">
+            <enum>Qt::LayoutDirection::LeftToRight</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(255, 255, 255);</string>
            </property>
            <property name="text">
-            <string>LOGO</string>
+            <string/>
            </property>
            <property name="alignment">
             <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -124,6 +168,9 @@
                 <width>64</width>
                 <height>64</height>
                </size>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -168,7 +215,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="buttonSelectFile">
+               <widget class="QPushButton" name="buttonSelectInputFile">
                 <property name="text">
                  <string>Выберите файл</string>
                 </property>
@@ -179,26 +226,36 @@
                 <property name="text">
                  <string/>
                 </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
                </widget>
               </item>
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="layoutOutputFile">
+             <layout class="QHBoxLayout" name="layoutOutputFile" stretch="1,1,3">
               <item>
-               <widget class="QLabel" name="labelEnterOutputFilename">
+               <widget class="QLabel" name="labelSelectOutputFile">
                 <property name="text">
-                 <string>Введите имя выходного файла:</string>
+                 <string>Введите выходной файл:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEditOutputFilename">
+               <widget class="QPushButton" name="buttonSelectOutputFile">
+                <property name="text">
+                 <string>Выберите файл</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelOutputFile">
                 <property name="text">
                  <string/>
                 </property>
-                <property name="placeholderText">
-                 <string>если пустое, то к имени входного файла будет добавлено .ari</string>
+                <property name="wordWrap">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -222,6 +279,10 @@
             </item>
             <item>
              <widget class="QLineEdit" name="lineEditWidth">
+              <property name="styleSheet">
+               <string notr="true">border: 2px solid;
+	font: 12pt;</string>
+              </property>
               <property name="placeholderText">
                <string>32</string>
               </property>
@@ -236,6 +297,10 @@
             </item>
             <item>
              <widget class="QLineEdit" name="lineEditScale">
+              <property name="styleSheet">
+               <string notr="true">border: 2px solid;
+	font: 12pt;</string>
+              </property>
               <property name="placeholderText">
                <string>0</string>
               </property>
@@ -250,6 +315,9 @@
             <widget class="QPushButton" name="buttonExecute">
              <property name="text">
               <string>exec</string>
+             </property>
+             <property name="checkable">
+              <bool>false</bool>
              </property>
             </widget>
            </item>

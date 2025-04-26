@@ -19,7 +19,7 @@ namespace Arico {
             explicit Arico();
             ~Arico();
             
-            void run(AricoParameters parameters);
+            void execute(const AricoParameters& parameters);
     
     };
     

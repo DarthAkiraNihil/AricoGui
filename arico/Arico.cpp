@@ -6,6 +6,9 @@
 #include <QDir>
 
 namespace Arico {
+    
+    inline const QString PYTHON_PATH = "./python/python";
+    
     Arico::Arico() {
         this->_process = new QProcess;
     }
@@ -14,7 +17,7 @@ namespace Arico {
         delete this->_process;
     }
     
-    void Arico::run(AricoParameters parameters) {
+    void Arico::execute(const AricoParameters& parameters) {
         QString cmd;
         QStringList args;
         args << "arico.py";
@@ -24,7 +27,7 @@ namespace Arico {
             args << "-e" << "-i" << parameters.inputFile << "-o" << parameters.outputFile;
         }
         qDebug() << "args: " << args;
-        qDebug() << "status code: " << QProcess::execute("./python/python", args);
+        qDebug() << "status code: " << QProcess::execute(PYTHON_PATH, args);
     }
     
 } // Arico

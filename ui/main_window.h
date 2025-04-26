@@ -25,7 +25,9 @@ namespace UI {
             
         private slots:
             void changeSelectedInputFile(const QString& filename);
+            void changeSelectedOutputFile(const QString& filename);
             void changeNonRequiredParametersEnableState(bool state);
+            void setExecutionPossibility(bool validationStatus);
         
         private:
             Ui::MainWindow *ui;

@@ -26,19 +26,27 @@ namespace ViewModel {
             int scale;
             
             Type::AricoMode mode;
+            
+            bool validate();
         
         public:
             explicit MainWindowModel(Arico::Arico* arico, QWidget* parent);
             
         signals:
             void selectedInputFileChanged(QString filename);
+            void selectedOutputFileChanged(QString filename);
             void nonRequiredParametersEnabledChanged(bool state);
+            void validationStatusChanged(bool validationStatus);
             
         public slots:
             void selectPackMode(bool checked = false);
             void selectUnpackMode(bool checked = false);
             
             void selectInputFile(bool checked = false);
+            void selectOutputFile(bool checked = false);
+            
+            void changeWidth(const QString &text);
+            void changeScale(const QString &text);
             
             void executeArico(bool checked = false);
     };
