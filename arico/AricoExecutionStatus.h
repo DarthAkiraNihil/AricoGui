@@ -7,7 +7,7 @@
 
 namespace Arico {
     enum class AricoExecutionStatus {
-        Success,
+        Success = 0,
         Error,
         NotLaunched
     };

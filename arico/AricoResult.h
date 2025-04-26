@@ -9,7 +9,7 @@
 
 namespace Arico {
     struct AricoResult {
-        long elapsedTime = 0.0;
+        long long elapsedTime = 0.0;
         double compressionCoefficient = 0.0;
         AricoExecutionStatus status = AricoExecutionStatus::NotLaunched;
     };

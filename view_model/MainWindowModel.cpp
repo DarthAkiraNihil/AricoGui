@@ -40,7 +40,12 @@ namespace ViewModel {
     }
     
     void MainWindowModel::selectInputFile(bool checked) {
-        QString filename = QFileDialog::getOpenFileName(this->parent, "Выбрать входной файл", ".");
+        QString filename;
+        if (this->mode == Type::AricoMode::Unpack) {
+            filename = QFileDialog::getSaveFileName(this->parent, "Выбрать выходной файл", ".", tr("Архив Arico (*.ari)"));
+        } else {
+            filename = QFileDialog::getSaveFileName(this->parent, "Выбрать выходной файл", ".");
+        }
         if (!filename.isEmpty()) {
             this->inputFileName = filename;
             emit this->selectedInputFileChanged(filename);
@@ -49,7 +54,12 @@ namespace ViewModel {
     }
     
     void MainWindowModel::selectOutputFile(bool checked) {
-        QString filename = QFileDialog::getSaveFileName(this->parent, "Выбрать выходной файл", ".", tr("Архив Arico (*.ari)"));
+        QString filename;
+        if (this->mode == Type::AricoMode::Pack) {
+            filename = QFileDialog::getSaveFileName(this->parent, "Выбрать выходной файл", ".", tr("Архив Arico (*.ari)"));
+        } else {
+            filename = QFileDialog::getSaveFileName(this->parent, "Выбрать выходной файл", ".");
+        }
         if (!filename.isEmpty()) {
             this->outputFileName = filename;
             emit this->selectedOutputFileChanged(filename);
@@ -63,15 +73,28 @@ namespace ViewModel {
             return;
         }
         if (this->width > 4096) {
-            QMessageBox::warning(this->parent, "Внимание!", "Вы указали очень большую ширину кодового слова. Возможны потери в точности и потеря производительности!");
+            QMessageBox::warning(this->parent, "Внимание!", "Вы указали очень большую ширину кодового слова. Возможны потери в точности и производительности!");
         }
-        this->aricoInstance->execute({
+        Arico::AricoResult result = this->aricoInstance->execute({
             this->inputFileName,
-            this->inputFileName + QString(".ari"),
+            this->outputFileName,
             this->width,
             this->scale,
             this->mode
         });
+        
+        if (result.status == Arico::AricoExecutionStatus::Success) {
+            QMessageBox::information(
+                this->parent, "Успех!",
+                QString("Сжатие данных успешно!\n\nВремя выполнения: %0\n\nКоэффициент сжатия: %1")
+                .arg(result.elapsedTime).arg(result.compressionCoefficient));
+        } else {
+            QMessageBox::critical(
+                this->parent, "Saatana vittu perkele",
+                "Произошла ошибка выполнения"
+                );
+        }
+        
     }
     
     bool MainWindowModel::validate() {

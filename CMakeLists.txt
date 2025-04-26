@@ -29,6 +29,9 @@ add_executable(AricoGui main.cpp
         arico/AricoParameters.h
         arico/AricoResult.h
         arico/AricoExecutionStatus.h
+        ui/about_dialog.cpp
+        ui/about_dialog.h
+        ui/about_dialog.ui
 )
 target_link_libraries(AricoGui
         Qt::Core

@@ -11,6 +11,7 @@
 
 #include "main_window.h"
 #include "ui_main_window.h"
+#include "about_dialog.h"
 
 namespace UI {
     MainWindow::MainWindow(QWidget *parent) :
@@ -18,7 +19,7 @@ namespace UI {
         this->ui->setupUi(this);
         this->setWindowIcon(QIcon(":/assets/icon.ico"));
         
-        Arico::Arico* arico = new Arico::Arico;
+        auto arico = new Arico::Arico;
         
         this->ui->lineEditWidth->setValidator(new QIntValidator(2, 999999, this));
         this->ui->lineEditScale->setValidator(new QIntValidator(0, 255, this));
@@ -27,7 +28,6 @@ namespace UI {
         
         this->connectSignals();
         
-        QFont jetBrainsMonoLogo("JetBrains Mono", 32, QFont::Weight::Bold);
         QFont jetBrainsMonoHeader("JetBrains Mono", 12);
         QFont jetBrainsMonoRegular("JetBrains Mono", 10);
         
@@ -86,6 +86,9 @@ namespace UI {
     }
     
     void MainWindow::connectSignals() {
+        
+        QObject::connect(this->ui->buttonAbout, &QAbstractButton::clicked, this, &MainWindow::showAboutInfo);
+        
         QObject::connect(this->ui->radioButtonCompress, &QAbstractButton::clicked, this->viewModel, &ViewModel::MainWindowModel::selectPackMode);
         QObject::connect(this->ui->radioButtonDecompress, &QAbstractButton::clicked, this->viewModel, &ViewModel::MainWindowModel::selectUnpackMode);
         
@@ -119,6 +122,11 @@ namespace UI {
     
     void MainWindow::setExecutionPossibility(bool validationStatus) {
         this->ui->buttonExecute->setEnabled(validationStatus);
+    }
+    
+    void MainWindow::showAboutInfo(bool checked) {
+        AboutDialog aboutDialog(this);
+        aboutDialog.exec();
     }
     
 } // UI

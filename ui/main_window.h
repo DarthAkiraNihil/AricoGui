@@ -28,6 +28,7 @@ namespace UI {
             void changeSelectedOutputFile(const QString& filename);
             void changeNonRequiredParametersEnableState(bool state);
             void setExecutionPossibility(bool validationStatus);
+            void showAboutInfo(bool checked = false);
         
         private:
             Ui::MainWindow *ui;

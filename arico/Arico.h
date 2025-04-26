@@ -7,6 +7,7 @@
 
 #include <QProcess>
 #include "AricoParameters.h"
+#include "AricoResult.h"
 
 namespace Arico {
     
@@ -19,7 +20,7 @@ namespace Arico {
             explicit Arico();
             ~Arico();
             
-            void execute(const AricoParameters& parameters);
+            AricoResult execute(const AricoParameters& parameters);
     
     };
     
