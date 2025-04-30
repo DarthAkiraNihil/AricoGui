@@ -32,7 +32,7 @@ namespace Arico {
             void onAricoFinished(int code, QProcess::ExitStatus status = QProcess::NormalExit);
         
         signals:
-            void aricoFinished(AricoResult result);
+            void aricoFinished(AricoResult result, QString message);
     
     };
     

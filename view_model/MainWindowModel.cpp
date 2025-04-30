@@ -115,18 +115,66 @@ namespace ViewModel {
         emit this->validationStatusChanged(this->validate());
     }
     
-    void MainWindowModel::onAricoFinished(Arico::AricoResult result) {
+    void MainWindowModel::onAricoFinished(Arico::AricoResult result, QString message) {
         emit this->aricoFinished();
-        if (result.status == Arico::AricoExecutionStatus::Success) {
-            QMessageBox::information(
-                this->parent, "Успех!",
-                QString("Сжатие данных успешно!\n\nВремя выполнения: %0\n\nКоэффициент сжатия: %1")
-                    .arg(result.elapsedTime).arg(result.compressionCoefficient));
-        } else {
-            QMessageBox::critical(
-                this->parent, "Saatana vittu perkele",
-                "Произошла ошибка выполнения"
-            );
+        switch(result.status) {
+            case Arico::AricoExecutionStatus::Success: {
+                QMessageBox::information(
+                    this->parent, "Успех!",
+                    QString("Сжатие данных успешно!\n\nВремя выполнения: %0\n\nКоэффициент сжатия: %1")
+                        .arg(result.elapsedTime).arg(result.compressionCoefficient)
+                );
+            }
+            case Arico::AricoExecutionStatus::ErrorWidthTooSmall: {
+                QMessageBox::critical(
+                    this->parent, "Saatana vittu perkele",
+                    "Ошибка - ширина кодового слова слишком маленькая. Введите значение, хотя бы большее 2!"
+                );
+                return;
+            }
+            case Arico::AricoExecutionStatus::ErrorChunkSizeTooSmall: {
+                QMessageBox::critical(
+                    this->parent, "Saatana vittu perkele",
+                    "Ошибка - размер блока при чтении данных слишком маленький. Введите значение, хотя бы большее 1!"
+                );
+                return;
+            }
+            case Arico::AricoExecutionStatus::ErrorInvalidSignature: {
+                QMessageBox::critical(
+                    this->parent, "Saatana vittu perkele",
+                    "Ошибка - файл имеет некорректную сигнатуру, а следовательно не является файлов архива Arico"
+                );
+                return;
+            }
+            case Arico::AricoExecutionStatus::ErrorLengthCheckpointNotFound: {
+                QMessageBox::critical(
+                    this->parent, "Saatana vittu perkele",
+                    QString("Ошибка - не найдена контрольная точка длин в архиве. Возможно, он повреждён.\n\nПодробнее:\n\n%0").arg(message)
+                );
+                return;
+            }
+            case Arico::AricoExecutionStatus::ErrorCountsCheckpointNotFound: {
+                QMessageBox::critical(
+                    this->parent, "Saatana vittu perkele",
+                    QString("Ошибка - не найдена контрольная точка частотной таблицы в архиве. Возможно, он повреждён.\n\nПодробнее:\n\n%0").arg(message)
+                );
+                return;
+            }
+            
+            case Arico::AricoExecutionStatus::UnknownError: {
+                QMessageBox::critical(
+                    this->parent, "Saatana vittu perkele",
+                    QString("Ошибка - неизвестная ошибка\n\nПодробнее:\n\n%0").arg(message)
+                );
+                return;
+            }
+            default: {
+                QMessageBox::critical(
+                    this->parent, "Saatana vittu perkele",
+                    "Ошибка - результат выполнения - не запущен"
+                );
+                return;
+            }
         }
     }
 } // ViewModel

@@ -42,7 +42,7 @@ namespace Arico {
     
     void Arico::onAricoFinished(int code, QProcess::ExitStatus status) {
         AricoResult result;
-        
+        qDebug() << "Status code" << code;
         switch (code) {
             case 0: {
                 result.status = AricoExecutionStatus::Success;
@@ -52,12 +52,37 @@ namespace Arico {
                 
                 result.compressionCoefficient = ((double) (input.size() - output.size()) / (double) input.size()) * 100.0;
                 result.elapsedTime = elapsed.elapsed();
-                emit this->aricoFinished(result);
+                emit this->aricoFinished(result, "");
+                return;
+            }
+            case 1: {
+                result.status = AricoExecutionStatus::ErrorWidthTooSmall;
+                emit this->aricoFinished(result, QString(this->_process->readAllStandardOutput()));
+                return;
+            }
+            case 2: {
+                result.status = AricoExecutionStatus::ErrorChunkSizeTooSmall;
+                emit this->aricoFinished(result, QString(this->_process->readAllStandardOutput()));
+                return;
+            }
+            case 10: {
+                result.status = AricoExecutionStatus::ErrorInvalidSignature;
+                emit this->aricoFinished(result, QString(this->_process->readAllStandardOutput()));
+                return;
+            }
+            case 11: {
+                result.status = AricoExecutionStatus::ErrorLengthCheckpointNotFound;
+                emit this->aricoFinished(result, QString(this->_process->readAllStandardOutput()));
+                return;
+            }
+            case 12: {
+                result.status = AricoExecutionStatus::ErrorCountsCheckpointNotFound;
+                emit this->aricoFinished(result, QString(this->_process->readAllStandardOutput()));
                 return;
             }
             default: {
-                result.status = AricoExecutionStatus::Error;
-                emit this->aricoFinished(result);
+                result.status = AricoExecutionStatus::UnknownError;
+                emit this->aricoFinished(result, QString(this->_process->readAllStandardOutput()));
                 return;
             }
         }

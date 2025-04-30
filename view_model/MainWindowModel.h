@@ -34,7 +34,7 @@ namespace ViewModel {
             explicit MainWindowModel(Arico::Arico* arico, QWidget* parent);
             
         private slots:
-            void onAricoFinished(Arico::AricoResult result);
+            void onAricoFinished(Arico::AricoResult result, QString message);
             
         signals:
             void selectedInputFileChanged(QString filename);

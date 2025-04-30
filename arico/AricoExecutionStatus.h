@@ -8,8 +8,14 @@
 namespace Arico {
     enum class AricoExecutionStatus {
         Success = 0,
-        Error,
-        NotLaunched
+        ErrorWidthTooSmall = 1,
+        ErrorChunkSizeTooSmall = 2,
+        ErrorInvalidSignature = 10,
+        ErrorLengthCheckpointNotFound = 11,
+        ErrorCountsCheckpointNotFound = 12,
+        
+        UnknownError = 0xFF,
+        NotLaunched = 0x100,
     };
 }
 
