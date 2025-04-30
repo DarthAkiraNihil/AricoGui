@@ -29,6 +29,9 @@ namespace UI {
             void changeNonRequiredParametersEnableState(bool state);
             void setExecutionPossibility(bool validationStatus);
             void showAboutInfo(bool checked = false);
+            
+            void onAricoStarted();
+            void onAricoFinished();
         
         private:
             Ui::MainWindow *ui;

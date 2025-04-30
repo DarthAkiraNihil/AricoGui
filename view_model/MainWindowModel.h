@@ -42,6 +42,9 @@ namespace ViewModel {
             void nonRequiredParametersEnabledChanged(bool state);
             void validationStatusChanged(bool validationStatus);
             
+            void aricoStarted();
+            void aricoFinished();
+            
         public slots:
             void selectPackMode(bool checked = false);
             void selectUnpackMode(bool checked = false);

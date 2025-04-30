@@ -88,6 +88,7 @@ namespace ViewModel {
             this->chunkSize,
             this->mode
         });
+        emit this->aricoStarted();
         
     }
     
@@ -115,6 +116,7 @@ namespace ViewModel {
     }
     
     void MainWindowModel::onAricoFinished(Arico::AricoResult result) {
+        emit this->aricoFinished();
         if (result.status == Arico::AricoExecutionStatus::Success) {
             QMessageBox::information(
                 this->parent, "Успех!",

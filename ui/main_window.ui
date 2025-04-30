@@ -353,6 +353,21 @@ QLIneEdit {
            </item>
            <item>
             <widget class="QProgressBar" name="progressBar">
+             <property name="styleSheet">
+              <string notr="true">QProgressBar {
+        border: 2px solid grey;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    QProgressBar::chunk {
+        background-color: #2ecc71;
+        width: 12px;
+    }</string>
+             </property>
+             <property name="maximum">
+              <number>1</number>
+             </property>
              <property name="value">
               <number>0</number>
              </property>

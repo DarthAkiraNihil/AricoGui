@@ -21,6 +21,10 @@ namespace UI {
         
         auto arico = new Arico::Arico;
         
+        this->ui->progressBar->setFormat("Подождите...");
+        this->ui->progressBar->setAlignment(Qt::AlignCenter);
+        this->ui->progressBar->setTextVisible(false);
+        
         this->ui->lineEditWidth->setValidator(new QIntValidator(2, 999999, this));
         this->ui->lineEditScale->setValidator(new QIntValidator(0, 255, this));
         this->ui->lineEditChunkSize->setValidator(new QIntValidator(0, 9999999, this));
@@ -110,6 +114,9 @@ namespace UI {
         QObject::connect(this->viewModel, &ViewModel::MainWindowModel::selectedOutputFileChanged, this, &MainWindow::changeSelectedOutputFile);
         
         QObject::connect(this->viewModel, &ViewModel::MainWindowModel::validationStatusChanged, this, &MainWindow::setExecutionPossibility);
+        
+        QObject::connect(this->viewModel, &ViewModel::MainWindowModel::aricoStarted, this, &MainWindow::onAricoStarted);
+        QObject::connect(this->viewModel, &ViewModel::MainWindowModel::aricoFinished, this, &MainWindow::onAricoFinished);
     }
     
     void MainWindow::changeSelectedInputFile(const QString& filename) {
@@ -130,9 +137,19 @@ namespace UI {
         this->ui->buttonExecute->setEnabled(validationStatus);
     }
     
-    void MainWindow::showAboutInfo(bool checked) {
+    void MainWindow::showAboutInfo(bool /*checked*/) {
         AboutDialog aboutDialog(this);
         aboutDialog.exec();
+    }
+    
+    void MainWindow::onAricoStarted() {
+        this->ui->progressBar->setMaximum(0);
+        this->ui->progressBar->setTextVisible(true);
+    }
+    
+    void MainWindow::onAricoFinished() {
+        this->ui->progressBar->setMaximum(1);
+        this->ui->progressBar->setTextVisible(false);
     }
     
 } // UI
