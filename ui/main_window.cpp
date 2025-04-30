@@ -145,11 +145,13 @@ namespace UI {
     void MainWindow::onAricoStarted() {
         this->ui->progressBar->setMaximum(0);
         this->ui->progressBar->setTextVisible(true);
+        this->ui->buttonExecute->setText("Отменить");
     }
     
     void MainWindow::onAricoFinished() {
         this->ui->progressBar->setMaximum(1);
         this->ui->progressBar->setTextVisible(false);
+        this->ui->buttonExecute->setText("Начать");
     }
     
 } // UI

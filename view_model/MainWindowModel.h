@@ -28,6 +28,8 @@ namespace ViewModel {
             
             Type::AricoMode mode;
             
+            bool aricoRunning;
+            
             bool validate();
         
         public:

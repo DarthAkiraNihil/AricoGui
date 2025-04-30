@@ -21,6 +21,8 @@ namespace ViewModel {
         
         this->aricoInstance = arico;
         
+        this->aricoRunning = false;
+        
         QObject::connect(this->aricoInstance, &Arico::Arico::aricoFinished, this, &MainWindowModel::onAricoFinished);
         
     }
@@ -72,6 +74,16 @@ namespace ViewModel {
     }
     
     void MainWindowModel::executeArico(bool checked) {
+        
+        if (this->aricoRunning) {
+            if (QMessageBox::question(this->parent, "Test", "quieres?") == QMessageBox::Yes) {
+                this->aricoInstance->kill();
+                this->aricoRunning = false;
+                emit this->aricoFinished();
+            }
+            return;
+        }
+        
         if (!this->validate()) {
             QMessageBox::critical(this->parent, "Saatana vittu perkele", "Произошла ошибка валидации входных данных. Убедитесь, что входные данные введены правильно!");
             return;
@@ -88,6 +100,7 @@ namespace ViewModel {
             this->chunkSize,
             this->mode
         });
+        this->aricoRunning = true;
         emit this->aricoStarted();
         
     }
@@ -117,6 +130,7 @@ namespace ViewModel {
     
     void MainWindowModel::onAricoFinished(Arico::AricoResult result, QString message) {
         emit this->aricoFinished();
+        this->aricoRunning = false;
         switch(result.status) {
             case Arico::AricoExecutionStatus::Success: {
                 QMessageBox::information(
@@ -166,6 +180,9 @@ namespace ViewModel {
                     this->parent, "Saatana vittu perkele",
                     QString("Ошибка - неизвестная ошибка\n\nПодробнее:\n\n%0").arg(message)
                 );
+                return;
+            }
+            case Arico::AricoExecutionStatus::Killed: {
                 return;
             }
             default: {

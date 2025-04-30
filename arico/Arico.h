@@ -27,6 +27,7 @@ namespace Arico {
             ~Arico();
             
             void execute(const AricoParameters& parameters);
+            void kill();
             
         private slots:
             void onAricoFinished(int code, QProcess::ExitStatus status = QProcess::NormalExit);

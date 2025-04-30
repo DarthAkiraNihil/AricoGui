@@ -16,6 +16,7 @@ namespace Arico {
         
         UnknownError = 0xFF,
         NotLaunched = 0x100,
+        Killed = 62097,
     };
 }
 

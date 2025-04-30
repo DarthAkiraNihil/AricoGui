@@ -80,11 +80,25 @@ namespace Arico {
                 emit this->aricoFinished(result, QString(this->_process->readAllStandardOutput()));
                 return;
             }
+            case 62097: {
+                result.status = AricoExecutionStatus::Killed;
+                emit this->aricoFinished(result, "");
+                return;
+            }
             default: {
                 result.status = AricoExecutionStatus::UnknownError;
                 emit this->aricoFinished(result, QString(this->_process->readAllStandardOutput()));
                 return;
             }
+        }
+    }
+    
+    void Arico::kill() {
+        if (this->_process->processId() > 0) {
+            this->_process->kill();
+            qDebug() << "Last output: " << this->lastUsedParameters.outputFile;
+            QFile file(this->lastUsedParameters.outputFile);
+            file.remove();
         }
     }
     
