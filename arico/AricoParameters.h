@@ -15,6 +15,7 @@ namespace Arico {
         QString outputFile;
         int width;
         int scale;
+        int chunkSize;
         Type::AricoMode mode;
     };
     

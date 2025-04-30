@@ -23,6 +23,7 @@ namespace UI {
         
         this->ui->lineEditWidth->setValidator(new QIntValidator(2, 999999, this));
         this->ui->lineEditScale->setValidator(new QIntValidator(0, 255, this));
+        this->ui->lineEditChunkSize->setValidator(new QIntValidator(0, 9999999, this));
         
         this->viewModel = new ViewModel::MainWindowModel(arico, this);
         
@@ -50,8 +51,11 @@ namespace UI {
             this->ui->lineEditScale,
             this->ui->labelWidth,
             this->ui->lineEditWidth,
+            this->ui->labelChunkSize,
+            this->ui->lineEditChunkSize,
             
-            this->ui->buttonExecute
+            this->ui->buttonExecute,
+            this->ui->buttonAbout
         };
         
         this->ui->verticalLayout->setAlignment(this->ui->labelLogo, Qt::AlignHCenter);
@@ -99,6 +103,7 @@ namespace UI {
         
         QObject::connect(this->ui->lineEditWidth, &QLineEdit::textChanged, this->viewModel, &ViewModel::MainWindowModel::changeWidth);
         QObject::connect(this->ui->lineEditScale, &QLineEdit::textChanged, this->viewModel, &ViewModel::MainWindowModel::changeScale);
+        QObject::connect(this->ui->lineEditChunkSize, &QLineEdit::textChanged, this->viewModel, &ViewModel::MainWindowModel::changeChunkSize);
         
         QObject::connect(this->viewModel, &ViewModel::MainWindowModel::nonRequiredParametersEnabledChanged, this, &MainWindow::changeNonRequiredParametersEnableState);
         QObject::connect(this->viewModel, &ViewModel::MainWindowModel::selectedInputFileChanged, this, &MainWindow::changeSelectedInputFile);
@@ -118,6 +123,7 @@ namespace UI {
     void MainWindow::changeNonRequiredParametersEnableState(bool state) {
         this->ui->lineEditScale->setEnabled(state);
         this->ui->lineEditWidth->setEnabled(state);
+        this->ui->lineEditChunkSize->setEnabled(state);
     }
     
     void MainWindow::setExecutionPossibility(bool validationStatus) {

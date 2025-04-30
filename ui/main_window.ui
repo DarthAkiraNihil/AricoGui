@@ -269,48 +269,78 @@ QLIneEdit {
            <property name="title">
             <string>Необязательные параметры</string>
            </property>
-           <layout class="QHBoxLayout" name="layoutNonRequiredOptions" stretch="1,1,1,1">
+           <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0">
             <item>
-             <widget class="QLabel" name="labelWidth">
-              <property name="text">
-               <string>Ширина слова:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lineEditWidth">
-              <property name="styleSheet">
-               <string notr="true">border: 2px solid;
+             <layout class="QHBoxLayout" name="layoutScale" stretch="8,2">
+              <item>
+               <widget class="QLabel" name="labelScale">
+                <property name="text">
+                 <string>Масштаб:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEditScale">
+                <property name="styleSheet">
+                 <string notr="true">border: 2px solid;
 	font: 12pt;</string>
-              </property>
-              <property name="placeholderText">
-               <string>32</string>
-              </property>
-             </widget>
+                </property>
+                <property name="placeholderText">
+                 <string>0</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
-             <widget class="QLabel" name="labelScale">
-              <property name="text">
-               <string>Масштаб:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lineEditScale">
-              <property name="styleSheet">
-               <string notr="true">border: 2px solid;
+             <layout class="QHBoxLayout" name="layoutWidth" stretch="8,2">
+              <item>
+               <widget class="QLabel" name="labelWidth">
+                <property name="text">
+                 <string>Ширина слова:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEditWidth">
+                <property name="styleSheet">
+                 <string notr="true">border: 2px solid;
 	font: 12pt;</string>
-              </property>
-              <property name="placeholderText">
-               <string>0</string>
-              </property>
-             </widget>
+                </property>
+                <property name="placeholderText">
+                 <string>32</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="layoutChunkSize" stretch="8,2">
+              <item>
+               <widget class="QLabel" name="labelChunkSize">
+                <property name="text">
+                 <string>Размер блока данных при считывании:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEditChunkSize">
+                <property name="styleSheet">
+                 <string notr="true">border: 2px solid;
+	font: 12pt;</string>
+                </property>
+                <property name="placeholderText">
+                 <string>65536</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="layoutRun">
+          <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
             <widget class="QPushButton" name="buttonExecute">
              <property name="text">
@@ -318,6 +348,19 @@ QLIneEdit {
              </property>
              <property name="checkable">
               <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="progressBar">
+             <property name="value">
+              <number>0</number>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+             <property name="format">
+              <string/>
              </property>
             </widget>
            </item>

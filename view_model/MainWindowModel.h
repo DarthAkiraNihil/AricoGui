@@ -24,6 +24,7 @@ namespace ViewModel {
             QString outputFileName;
             int width;
             int scale;
+            int chunkSize;
             
             Type::AricoMode mode;
             
@@ -31,6 +32,9 @@ namespace ViewModel {
         
         public:
             explicit MainWindowModel(Arico::Arico* arico, QWidget* parent);
+            
+        private slots:
+            void onAricoFinished(Arico::AricoResult result);
             
         signals:
             void selectedInputFileChanged(QString filename);
@@ -47,6 +51,7 @@ namespace ViewModel {
             
             void changeWidth(const QString &text);
             void changeScale(const QString &text);
+            void changeChunkSize(const QString &text);
             
             void executeArico(bool checked = false);
     };

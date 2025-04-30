@@ -5,22 +5,34 @@
 #ifndef ARICOGUI_ARICO_H
 #define ARICOGUI_ARICO_H
 
+#include <QObject>
 #include <QProcess>
+#include <QElapsedTimer>
 #include "AricoParameters.h"
 #include "AricoResult.h"
 
 namespace Arico {
     
-    class Arico {
+    class Arico: public QObject {
+        
+        Q_OBJECT
     
         private:
             QProcess* _process;
+            QElapsedTimer elapsed;
+            AricoParameters lastUsedParameters;
             
         public:
             explicit Arico();
             ~Arico();
             
-            AricoResult execute(const AricoParameters& parameters);
+            void execute(const AricoParameters& parameters);
+            
+        private slots:
+            void onAricoFinished(int code, QProcess::ExitStatus status = QProcess::NormalExit);
+        
+        signals:
+            void aricoFinished(AricoResult result);
     
     };
     

@@ -10,48 +10,55 @@ namespace Arico {
     
     inline const QString PYTHON_PATH = "./python/python";
     
-    Arico::Arico() {
+    Arico::Arico(): elapsed() {
         this->_process = new QProcess;
+        QObject::connect(this->_process, &QProcess::finished, this, &Arico::onAricoFinished);
     }
     
     Arico::~Arico() {
         delete this->_process;
     }
     
-    AricoResult Arico::execute(const AricoParameters& parameters) {
+    void Arico::execute(const AricoParameters& parameters) {
+        this->lastUsedParameters = parameters;
         QStringList args;
         
         args << "arico.py";
         
         if (parameters.mode == Type::AricoMode::Pack) {
-            args << "-a" << "-i" << parameters.inputFile << "-o" << parameters.outputFile << "-w" << QString::number(parameters.width) << "-s" << QString::number(parameters.scale);
+            args << "-a" << "-i" << parameters.inputFile << "-o" << parameters.outputFile << "-w" << QString::number(parameters.width) << "-s" << QString::number(parameters.scale) << "-c" << QString::number(parameters.chunkSize);
         } else if (parameters.mode == Type::AricoMode::Unpack) {
-            args << "-e" << "-i" << parameters.inputFile << "-o" << parameters.outputFile;
+            args << "-e" << "-i" << parameters.inputFile << "-o" << parameters.outputFile << "-c" << QString::number(parameters.chunkSize);
         }
         
         qDebug() << "args: " << args;
         
-        QElapsedTimer elapsed;
-        elapsed.start();
-        int statusCode = QProcess::execute(PYTHON_PATH, args);
-        qDebug() << "status code: " << statusCode;
+        this->elapsed.start();
+        // int statusCode = QProcess::execute(PYTHON_PATH, args);
+        this->_process->start(PYTHON_PATH, args);
+        //qDebug() << "status code: " << statusCode;
         
+    }
+    
+    void Arico::onAricoFinished(int code, QProcess::ExitStatus status) {
         AricoResult result;
         
-        switch (statusCode) {
+        switch (code) {
             case 0: {
                 result.status = AricoExecutionStatus::Success;
                 
-                QFile input(parameters.inputFile);
-                QFile output(parameters.outputFile);
+                QFile input(this->lastUsedParameters.inputFile);
+                QFile output(this->lastUsedParameters.outputFile);
                 
                 result.compressionCoefficient = ((double) (input.size() - output.size()) / (double) input.size()) * 100.0;
                 result.elapsedTime = elapsed.elapsed();
-                return result;
+                emit this->aricoFinished(result);
+                return;
             }
             default: {
                 result.status = AricoExecutionStatus::Error;
-                return result;
+                emit this->aricoFinished(result);
+                return;
             }
         }
     }
