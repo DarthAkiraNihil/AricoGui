@@ -143,10 +143,10 @@ namespace ViewModel {
                 
                 QString time = QString("%0:%1:%2:%3.%4")
                     .arg(timeDays)
-                    .arg(timeHours % 24)
-                    .arg(timeMinutes % 60)
-                    .arg(timeSeconds % 60)
-                    .arg(timeMicroSeconds);
+                    .arg(timeHours % 24, 2, 10, QChar('0'))
+                    .arg(timeMinutes % 60, 2, 10, QChar('0'))
+                    .arg(timeSeconds % 60, 2, 10, QChar('0'))
+                    .arg(timeMicroSeconds, 3, 10, QChar('0'));
                 
                 if (this->frozenMode == Type::AricoMode::Pack) {
                     QMessageBox::information(

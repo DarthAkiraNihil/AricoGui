@@ -69,10 +69,17 @@ namespace UI {
         // this->ui->labelLogo->setFont(jetBrainsMonoLogo);
         
         for (QWidget*& widget: applyHeaderFont) {
+            QPalette palette = widget->palette();
+            palette.setColor(widget->foregroundRole(), Qt::white);
+            widget->setPalette(palette);
             widget->setFont(jetBrainsMonoHeader);
         }
         
         for (QWidget*& widget: applyRegularFont) {
+            QPalette palette = widget->palette();
+            palette.setColor(widget->foregroundRole(), Qt::white);
+            widget->setPalette(palette);
+            
             widget->setFont(jetBrainsMonoRegular);
         }
         
@@ -133,8 +140,8 @@ namespace UI {
         this->ui->lineEditChunkSize->setEnabled(state);
     }
     
-    void MainWindow::setExecutionPossibility(bool validationStatus) {
-        this->ui->buttonExecute->setEnabled(validationStatus);
+    void MainWindow::setExecutionPossibility(bool /*validationStatus*/) {
+        // this->ui->buttonExecute->setEnabled(validationStatus);
     }
     
     void MainWindow::showAboutInfo(bool /*checked*/) {
