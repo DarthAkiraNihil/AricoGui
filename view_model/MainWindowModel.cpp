@@ -76,7 +76,7 @@ namespace ViewModel {
     void MainWindowModel::executeArico(bool checked) {
         
         if (this->aricoRunning) {
-            if (QMessageBox::question(this->parent, "Test", "quieres?") == QMessageBox::Yes) {
+            if (QMessageBox::question(this->parent, "Предупреждение", "В действительно хотите отменить текущую операцию?") == QMessageBox::Yes) {
                 this->aricoInstance->kill();
                 this->aricoRunning = false;
                 emit this->aricoFinished();
@@ -100,6 +100,7 @@ namespace ViewModel {
             this->chunkSize,
             this->mode
         });
+        this->frozenMode = this->mode;
         this->aricoRunning = true;
         emit this->aricoStarted();
         
@@ -133,11 +134,34 @@ namespace ViewModel {
         this->aricoRunning = false;
         switch(result.status) {
             case Arico::AricoExecutionStatus::Success: {
-                QMessageBox::information(
-                    this->parent, "Успех!",
-                    QString("Сжатие данных успешно!\n\nВремя выполнения: %0\n\nКоэффициент сжатия: %1")
-                        .arg(result.elapsedTime).arg(result.compressionCoefficient)
-                );
+                
+                long long timeSeconds = result.elapsedTime / 1000;
+                long long timeMicroSeconds = result.elapsedTime % 1000;
+                long long timeMinutes = timeSeconds / 60;
+                long long timeHours = timeMinutes / 60;
+                long long timeDays = timeHours / 24;
+                
+                QString time = QString("%0:%1:%2:%3.%4")
+                    .arg(timeDays)
+                    .arg(timeHours % 24)
+                    .arg(timeMinutes % 60)
+                    .arg(timeSeconds % 60)
+                    .arg(timeMicroSeconds);
+                
+                if (this->frozenMode == Type::AricoMode::Pack) {
+                    QMessageBox::information(
+                        this->parent, "Успех!",
+                        QString("Сжатие данных успешно!\n\nВремя выполнения: %0\n\nСтепень сжатия: %1")
+                            .arg(time).arg(result.compressionCoefficient)
+                    );
+                } else {
+                    QMessageBox::information(
+                        this->parent, "Успех!",
+                        QString("Распаковка данных успешна!\n\nВремя выполнения: %0")
+                            .arg(time).arg(result.compressionCoefficient)
+                    );
+                }
+                break;
             }
             case Arico::AricoExecutionStatus::ErrorWidthTooSmall: {
                 QMessageBox::critical(
@@ -156,7 +180,7 @@ namespace ViewModel {
             case Arico::AricoExecutionStatus::ErrorInvalidSignature: {
                 QMessageBox::critical(
                     this->parent, "Saatana vittu perkele",
-                    "Ошибка - файл имеет некорректную сигнатуру, а следовательно не является файлов архива Arico"
+                    "Ошибка - файл имеет некорректную сигнатуру, а следовательно не является файлом архива Arico"
                 );
                 return;
             }

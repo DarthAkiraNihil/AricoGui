@@ -27,6 +27,7 @@ namespace ViewModel {
             int chunkSize;
             
             Type::AricoMode mode;
+            Type::AricoMode frozenMode;
             
             bool aricoRunning;
             
